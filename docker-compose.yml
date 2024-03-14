@@ -1,0 +1,15 @@
+version: '3'
+services:
+  frontend:
+    build: ./frontend/my-nextjs-app
+    ports:
+      - "3000:3000" # Map external port 3000 to internal container port 3000
+  backend:
+    build: ./backend
+    ports:
+      - "7777:7777"
+    depends_on:
+      # Ensure backend starts before frontend attempts to connect
+      - redis
+  redis:
+    image: redis:latest
